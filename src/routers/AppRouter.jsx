@@ -11,13 +11,13 @@ import { Logup } from '../views/logup/Logup'
 export const AppRouter = () => {
   return (
     <Routes>
-      <Route path='login' element={<Login />} />
       <Route path='/' element={<MainDashboard />}>
         <Route path="index" element={<Index />} />
         <Route path='admin' element={<Admin />} />
         <Route path='about' element={<About />} />
         <Route path='contact' element={<Contact />} />
         <Route path='home' element={<Home />} />
+        <Route path='login' element={<Login />} />
         <Route path='logup' element={<Logup />} />
         <Route path='' element={<Navigate to='index' replace />} />
       </Route>

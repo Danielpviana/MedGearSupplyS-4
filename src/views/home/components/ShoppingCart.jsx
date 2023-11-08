@@ -1,83 +1,85 @@
 import './ShoppingCart.css';
+import { CartProductCard } from './CartProductCard';
+import { useEffect, useState } from 'react';
 
-export function ShoppingCart() {
-//     class Carrito {
-//         constructor(productos) {
-//             this.productos = productos;
-//             this.itemsSeleccionados = [];
-//         }
+export function ShoppingCart({ cartList, remove, add, clean }) {
+    let validatedToken = localStorage.getItem('token');
+    const [totalPrice, setTotalPrice] = useState(0);
+    const [auxCartList, setAuxCartList] = useState([]);
 
-//         EliminarItem(id) {
-//             let carProducts = JSON.parse(localStorage.getItem('carProducts')) || []
-//             let products = JSON.parse(localStorage.getItem('products')) || []
+    const confirmBuy = async () => {
+        console.log(auxCartList);
+        auxCartList.map(async (product) => {
+            try {
+                const response = await fetch(`http://localhost:3001/api/products/${product._id}`, {       // Cambiar el puerto
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ name: product.name, imageUrl: product.image, price: product.price, amount: (product.amount - product.count) })
+                });
+            } catch (error) {
+                console.error("An error occurred:", error);
+            }
+        });
 
-//             const productoEncontrado = carProducts.find(producto => producto.id === id);
-//             const productsFound = products.find(producto => producto.id === id);
+        try {
+            const response = await fetch(`http://localhost:3001/api/products/sale`, {       // Cambiar el puerto
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    authorization: validatedToken,
+                },
+                body: JSON.stringify(auxCartList)
+            });
+        } catch (error) {
+            console.error("An error occurred:", error);
+        };
 
-//             if (productoEncontrado) {
-//                 productsFound.amount += 1;
-//                 localStorage.setItem("products", JSON.stringify(products));
-//                 if (productoEncontrado.amount === 1) {
-//                     const productosActualizados = carProducts.filter(producto => producto.id !== id);
-//                     //console.log(productosActualizados)
-//                     localStorage.setItem("carProducts", JSON.stringify(productosActualizados));
-//                 }
-//                 else {
-//                     productoEncontrado.amount -= 1;
-//                     localStorage.setItem("carProducts", JSON.stringify(carProducts));
-//                 }
-//             };
+        alert("Compra realizada.\nOrden registrada en la base de datos.");
+        clean();
+    }
 
-//             this.mostrarItems();
-//         }
+    useEffect(() => {
+        const reducedProducts = cartList.reduce((accumulator, currentProduct) => {
+            const existingProduct = accumulator.find((p) => p._id === currentProduct._id);
+            if (existingProduct) {
+                existingProduct.count++;
+            } else {
+                accumulator.push({ ...currentProduct, count: 1 });
+            }
+            return accumulator;
+        }, []);
+        console.log(reducedProducts);
 
-//         mostrarItems() {
-//             //console.log("hola")
-//             let carProducts = JSON.parse(localStorage.getItem('carProducts')) || []
-//             let productosCodigoHTML = "";
-//             let total = 0;
-//             carProducts.forEach(productInCar => {
-//                 const productSelected = products.find(product => product.id === productInCar.id);
-//                 let productoSeleccionado = `<li class="list-group-item d-flex flex-row justify-content-evenly">
-//       <img
-//         src="${productSelected.image}"
-//         class="item-img"
-//         alt="..."
-//       />
-//       <p style=margin-bottom:0px;>${productSelected.name}</p>
-//       <p style=margin-bottom:0px;><i>Precio: ${productSelected.price}</i></p>
-//       <p style=margin-bottom:0px;>#: ${productInCar.amount}</p>
-//       <button type="button" class="btn btn-success btn-sm" onclick="addToCart(${productSelected.id});">+</button>
-//       <button type="button" class="btn btn-danger btn-sm" onclick="eliminarClick(${productSelected.id});">-</button>
-//     </li>`;
-//                 productosCodigoHTML += productoSeleccionado;
-//                 total += (productSelected.price * productInCar.amount);
-//             })
-
-//             document.getElementById("carrito-compras-lista").innerHTML = productosCodigoHTML;
-//             let totalFinal = "Total: $";
-//             document.getElementById("total-price").innerHTML = totalFinal + total;
-//             //console.log(total);
-//         }
-//     }
+        let counter = 0;
+        cartList.map((product) => {
+            counter = counter + product?.price;
+            // filterCartList(product._id);
+        });
+        setTotalPrice(counter);
+        setAuxCartList(reducedProducts);
+    }, [cartList]);
 
     return (
         <>
             <div className="carrito-compras">
                 <div className="carrito-compras-titulo">
-                    <h2>Carrito compras</h2>
+                    <h2>Carrito de compras</h2>
                 </div>
                 <div className="carrito-compras-items">
                     <ul className="list-group list-group-flush" id="carrito-compras-lista">
-
+                        {/* carrito de compras */}
+                        {auxCartList.map((product) => (
+                            <CartProductCard key={product
+                                ._id} productInfo={product} remove={remove} add={add} />
+                        ))}
                     </ul>
                 </div>
                 <div className="carrito-compras-footer">
                     <div className="carrito-compras-total">
-                        <h4 id="total-price"></h4>
+                        <h4 id="total-price">Total: {totalPrice}</h4>
                     </div>
                     <div className="carrito-compras-comprar">
-                        <button >Comprar</button>
+                        <button onClick={confirmBuy}>Comprar</button>
                     </div>
                 </div>
             </div>

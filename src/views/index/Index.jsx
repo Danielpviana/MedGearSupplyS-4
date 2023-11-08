@@ -3,9 +3,11 @@ import { Navbar } from '../../components/navbar/Navbar';
 import { AboutUs } from '../../components/aboutUs/AboutUs';
 import { ContactUs } from '../../components/contactUs/ContactUs';
 import { ProductTypes } from '../../components/productTypes/ProductTypes';
-import banner from '../../assests/images/banner.jpg'
+import banner from '../../assests/images/banner.jpg';
 
 export function Index() {
+    let validatedToken = localStorage.getItem('token');
+
     return (
         <>
             <Navbar></Navbar>
