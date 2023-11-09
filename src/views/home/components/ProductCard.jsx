@@ -20,7 +20,7 @@ export function ProductCard({ id, name, imageUrl, price, amount, productList, ad
         <>
             <div className="col-md-3 py-3 py-md-0">
                 <div className="card">
-                    <img src={imageUrl} alt={name} />
+                    <img className="product-image" src={imageUrl} alt={name} />
                     <div className="overlay">
                         <button type="button" className="btn btn-secondary" title="Comprar">
                             <i><img src={eyeIcon} alt="" width="30px" /></i>

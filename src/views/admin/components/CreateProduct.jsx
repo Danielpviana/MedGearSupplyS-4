@@ -17,7 +17,9 @@ export function CreateProduct() {
             });
         } catch (error) {
             console.error("An error occurred:", error);
-        }
+        };
+        alert("Producto creado exitosamente.");
+        location.reload();
     };
 
     return (

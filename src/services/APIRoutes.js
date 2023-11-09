@@ -6,7 +6,6 @@ APIRoutes.use(cors());
 const { MongoClient, ObjectId } = require("mongodb");
 const connection = new MongoClient("mongodb://localhost:27017", { useUnifiedTopology: true });
 const jwt = require("jsonwebtoken");
-const { useReducer } = require("react");
 
 APIRoutes.get("/home", async (req, res) => {
     let validatedToken = req.headers["authorization"];

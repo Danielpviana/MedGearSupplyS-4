@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.css": "/static/css/main.6e8f4a52.css",
+    "main.js": "/static/js/main.f33c3de0.js",
+    "static/js/407.da58665f.chunk.js": "/static/js/407.da58665f.chunk.js",
+    "static/media/monitor sv.png": "/static/media/monitor sv.617ece0bca07b648be96.png",
+    "static/media/vestimenta.png": "/static/media/vestimenta.f23880c4bdd41ab0f317.png",
+    "static/media/electrobisturi.png": "/static/media/electrobisturi.86fb9547b4d317059c00.png",
+    "static/media/desfibrilador.jpg": "/static/media/desfibrilador.c4508b647b806ec7b082.jpg",
+    "static/media/MedGearFW.png": "/static/media/MedGearFW.5df9428f912a448b247d.png",
+    "static/media/banner.jpg": "/static/media/banner.940eba96b3c6f5ea3cb9.jpg",
+    "static/media/editIcon.png": "/static/media/editIcon.c69914e2cda159481277.png",
+    "static/media/deleteIcon.png": "/static/media/deleteIcon.c4f3a37d769a0b819098.png",
+    "static/media/login.png": "/static/media/login.be3dcf5b21dab8c6b62d.png",
+    "index.html": "/index.html",
+    "main.6e8f4a52.css.map": "/static/css/main.6e8f4a52.css.map",
+    "main.f33c3de0.js.map": "/static/js/main.f33c3de0.js.map",
+    "407.da58665f.chunk.js.map": "/static/js/407.da58665f.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.6e8f4a52.css",
+    "static/js/main.f33c3de0.js"
+  ]
+}
